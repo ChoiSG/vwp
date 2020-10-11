@@ -34,6 +34,8 @@ docker-compose down --volumes
     password: wordpress
     ```
 
+- 해당 워드프레스를 다른 컴퓨터에서 접근하려면, 먼저 http://127.0.0.1:8081/wp-admin/options-general.php 여기로 접근한 뒤 "Wordpress Address (URL)" 을 `http://127.0.0.1:8081` 에서 다른 아이피주소로 바꾸면 된다.
+
 ## 플러그인 & 취약점 정보
 * [InfiniteWP Client < 1.9.4.5 - Authentication Bypass](https://wpvulndb.com/vulnerabilities/10011)
   - CVE-2020-8772

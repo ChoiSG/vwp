@@ -37,6 +37,8 @@ docker-compose down --volumes
     password: wordpress
     ```
 
+- Do visit the wordpress from another machine, you need to change Wordpress Address (URL) from http://127.0.0.1:8081/wp-admin/options-general.php . Then, change `http://127.0.0.1:8081` to whatever IP Address you have.
+
 ## Plugins 
 * [InfiniteWP Client < 1.9.4.5 - Authentication Bypass](https://wpvulndb.com/vulnerabilities/10011)
   - CVE-2020-8772
