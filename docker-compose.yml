@@ -1,0 +1,73 @@
+version: '3'
+
+services:
+  # Wordpress's backend mysql container 
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    volumes:
+      - mysql:/var/lib/mysql
+
+  # Main wordpress container 
+  wordpress:
+    build: .
+    ports:
+      - 8081:80
+    environment:
+      WORDPRESS_DB_HOST: mysql:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    depends_on:
+      - mysql 
+    restart: always 
+    volumes:
+      - "wp:/var/www/html:rw"
+      - "wp:/etc/X11/fs/.wp-cli/:rw"
+
+  # phpmyadmin container 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - 8082:80
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - MYSQL_ROOT_PASSWORD=wordpress
+    depends_on:
+      - mysql
+
+  # wp-cli container for installing and configuring wordpress 
+  wp-cli:
+    image: "wordpress:cli-php7.1"
+    environment:
+      - APACHE_RUN_USER="www-data"
+      - APACHE_RUN_GROUP="www-data"
+    user: "33:33"
+    depends_on:
+      - mysql
+      - wordpress
+      - phpmyadmin
+    # Waiting for 15 seconds for wordpress and mysql to be "ready". Avoiding race condition. 
+    command: >
+      /bin/sh -c '
+      echo "Sleeping 15 seconds - waiting for wordpress and mysql to be ready..."; 
+      sleep 15;
+      echo "Done sleeping. Hopefully wordpress and mysql is ready!";
+      install-wp;
+      '
+    volumes:
+      - "wp:/var/www/html:rw"
+      - "wp:/etc/X11/fs/.wp-cli/:rw"
+      - "./bin/install-wp.sh:/usr/local/bin/install-wp:ro"
+
+
+
+volumes:
+  wp: {}
+  mysql: {}

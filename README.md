@@ -1,85 +1,62 @@
-# Note
-AFter installation, change the wordpress url to your liking. 
-By default, the wordpress only faces localhost 127.0.0.1 
 
+# Vulnerable Wordpress (VWP) 
+This repo is a modified version of the DVWP made by vavkamil - https://github.com/vavkamil/dvwp . 
 
-# Damn Vulnerable WordPress
+VWP is an intentionally created vulnerable wordpress environment made for vulnerability research, penetration testing practices, and source code review. 
 
-Playground for WordPress hacking and [wpscan](https://github.com/wpscanteam/wpscan) testing.
+## Credits
+As mentioned above, this repo is a modified/forked version of DVWP made by vavkamil - https://github.com/vavkamil/dvwp . All credits goes to vavkamil. 
 
-**DO NOT EXPOSE THIS TO INTERNET!**
-
-## Installation
-
+## Installation 
+VWP requires docker and docker-compose.
 ```
-$ git clone https://github.com/vavkamil/dvwp.git
-$ cd dvwp/
-$ docker-compose up -d --build
-$ docker-compose run --rm wp-cli install-wp
+git clone https://github.com/choisg/vwp.git
+cd ./vwp
+docker-compose up --build 
 ```
 
-## Usage
+## Shutdown
 ```
-$ docker-compose up
-$ docker-compose down
+cd <Directory_to>/vwp
+docker-compose down --volumes
 ```
 
-## Shell
-`docker exec -ti dvwp_wordpres_1 /bin/bash`
+## Services & Default Credentails
+- Wordpress - 127.0.0.1:8000
+  - ```
+    admin:admin
+    editor:editor
+    choi:password 
+    ```
+- PHPMyAdmin - 127.0.0.1:8001
+  - ```
+    server: mysql
+    user: wordpress
+    password: wordpress
+    ```
 
-## Interface
-
-* [http://127.0.0.1:31337](http://127.0.0.1:31337)
-* [http://127.0.0.1:31337/wp-login.php](http://127.0.0.1:31337/wp-login.php)
-* [http://127.0.0.1:31338/phpmyadmin/](http://127.0.0.1:31338/phpmyadmin/)
-
-## Credentials
-* Wordpress: admin/admin
-* MySQL: root/password
-
-## Vulnerabilities
-
-Feel free to contribute with pull requests ;)
-
-### Plugins
-
+## Plugins 
 * [InfiniteWP Client < 1.9.4.5 - Authentication Bypass](https://wpvulndb.com/vulnerabilities/10011)
   - CVE-2020-8772
 
 * [WordPress File Upload < 4.13.0 - Directory Traversal to RCE](https://wpvulndb.com/vulnerabilities/10132)
   - CVE-2020-10564
 
-* [WP Advanced Search < 3.3.4 - Unauthenticated Database Access and Remote Code Execution](https://wpvulndb.com/vulnerabilities/10115)
-  - no CVE
-
 * [Social Warfare <= 3.5.2 - Unauthenticated Arbitrary Settings Update](https://wpvulndb.com/vulnerabilities/9238)
   - CVE-2019-9978
 
-* [Backup and Staging by WP Time Capsule < 1.21.16 - Authentication Bypass](https://wpvulndb.com/vulnerabilities/10010)
-  - CVE-2020-8771
-  - NOT WORKING RIGHT NOW
+* [WP Advanced Search < 3.3.4 - Unauthenticated Database Access and Remote Code Execution](https://wpvulndb.com/vulnerabilities/10115)
+  - no CVE
 
-### Otherz
+* [Simple File List <= 4.2.2](https://www.cybersecurity-help.cz/vdb/SB2020042711)
+  - no CVE
 
-* Directory listing
-* display_errors
-* info.php
-* dump.sql
-* adminer.php
-* search-replace-db
-* cross-domain
+## Adding/Modifying Plugins 
 
-## TODO
-1. Add versions and description to each vulnerability in README.md
-2. Upload docker image to Docker Hub registry
-3. Get rid of the Dockerfile
-4. Run wp-cli automatically during build
-5. Use "svn co" or "wp-cli" to download vulnerable plugins directly
-6. Add more vulnerable plugins/themes
-7. Update WP and php to latest
-8. Add vulnerable phpmyadmin?
-9. Add script to pull `access.log` and `error.log` from container
-# dvwpmodified
+Add/Modify plugin names and versions from `./bin/install-wp.sh` file. 
+For specific plugin files, search the following. 
 
-
-
+1. Visit https://wordpress.org/plugins/ and search your plugin name 
+2. On the right side, click on `Advanced View`
+3. Scroll down to `Please select a specific version to download`, and find the version name 
+4. Edit `./bin/install-wp.sh`
