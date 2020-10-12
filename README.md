@@ -24,13 +24,13 @@ docker-compose down --volumes
 ```
 
 ## Services & Default Credentails
-- Wordpress - 127.0.0.1:8000
+- Wordpress - 127.0.0.1:8081
   - ```
     admin:admin
     editor:editor
     choi:password 
     ```
-- PHPMyAdmin - 127.0.0.1:8001
+- PHPMyAdmin - 127.0.0.1:8082
   - ```
     server: mysql
     user: wordpress
