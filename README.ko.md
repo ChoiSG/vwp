@@ -21,13 +21,13 @@ docker-compose down --volumes
 ```
 
 ## 포트 및 계정 정보 
-- Wordpress - 127.0.0.1:8081
+- Wordpress - 127.0.0.1:8000
   - ```
     admin:admin
     editor:editor
     choi:password 
     ```
-- PHPMyAdmin - 127.0.0.1:8082
+- PHPMyAdmin - 127.0.0.1:8001
   - ```
     server: mysql
     user: wordpress
