@@ -16,6 +16,7 @@ services:
   # Main wordpress container 
   wordpress:
     build: .
+    restart: always
     ports:
       - 8081:80
     environment:
@@ -25,7 +26,6 @@ services:
       WORDPRESS_DB_NAME: wordpress
     depends_on:
       - mysql 
-    restart: always 
     volumes:
       - "wp:/var/www/html:rw"
       - "wp:/etc/X11/fs/.wp-cli/:rw"
@@ -33,6 +33,7 @@ services:
   # phpmyadmin container 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
+    restart: always
     ports:
       - 8082:80
     environment:
@@ -45,6 +46,7 @@ services:
   # wp-cli container for installing and configuring wordpress 
   wp-cli:
     image: "wordpress:cli-php7.1"
+    restart: always
     environment:
       - APACHE_RUN_USER="www-data"
       - APACHE_RUN_GROUP="www-data"
