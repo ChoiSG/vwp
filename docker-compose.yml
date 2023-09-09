@@ -48,6 +48,7 @@ services:
     environment:
       - APACHE_RUN_USER="www-data"
       - APACHE_RUN_GROUP="www-data"
+      - HOST_IP_ADDRESS=${IP_ADDRESS}
     user: "33:33"
     depends_on:
       - mysql
@@ -56,6 +57,7 @@ services:
     # Waiting for 15 seconds for wordpress and mysql to be "ready". Avoiding race condition. 
     command: >
       /bin/sh -c '
+      echo it worked pog $HOST_IP_ADDRESS;
       echo "Sleeping 15 seconds - waiting for wordpress and mysql to be ready..."; 
       sleep 15;
       echo "Done sleeping. Hopefully wordpress and mysql is ready!";

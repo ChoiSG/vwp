@@ -20,6 +20,8 @@ docker-compose up --build
 ## Shutdown
 ```
 cd <Directory_to>/vwp
+export IP_ADDRESS=$(hostname -I | awk '{print $1}')
+export HOST_IP_ADDRESS=$(hostname -I | awk '{print $1}')
 docker-compose down --volumes
 ```
 
